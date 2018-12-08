@@ -80,6 +80,8 @@
             async getBreeds()
             {
                 try{
+                    axios.defaults.headers.common['x-api-key'] = "DEMO-API-KEY" // Replace this with your API Key, as it's set to defaults it will be used from now onwards
+                    
                     let response = await axios.get('https://api.thecatapi.com/v1/breeds/' ) 
                     this.breeds = response.data;
                     console.log("-- ("+this.breeds.length +") Breeds from TheCatAPI.com")
@@ -93,7 +95,6 @@
             async getImages()
             {
                 try{
-                    axios.defaults.headers.common['x-api-key'] = "DEMO-API-KEY" // Replace this with your API Key
                     
                     let query_params = {
                         breed_ids: this.selected_breed.id
