@@ -23,7 +23,7 @@
                                  attach></v-select>
                          </v-flex>
              
-                <v-btn color="blue" dark large @click="loadNextImage" >
+                <v-btn color="blue" dark large @click="getImage" >
                     Next &nbsp; <v-icon>navigate_next</v-icon>
                 </v-btn>
             </v-layout>
@@ -49,11 +49,19 @@
             image: { url: ""},
             image_type: 'gif'
         },
+        watch: {
+           
+            image_type: function()
+            {
+                console.log(this.selected_breed)
+                this.getImages();
+            }
+        },
         created(){
-            this.loadNextImage();
+            this.getImage();
         } ,
         methods:{
-            async loadNextImage()
+            async getImage()
             {
                 try{
                     axios.defaults.headers.common['x-api-key'] = "DEMO-API-KEY" // Replace this with your API Key

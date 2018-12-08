@@ -46,16 +46,22 @@
             <br>
             <!-- Pagination control -->
                 <v-layout  wrap align-center>
-                    <v-flex xs12>
-                        <v-pagination
+                    <v-flex xs11>
+                        <v-card xs10>
+
+        <v-card-title primary-title>
+                <div>Page</div>
+          </v-card-title>
+                        <v-pagination xs9
                         v-show="order!='Rand'" 
                         v-model="page"
                         :length="getNumPages"
                         ></v-pagination>
+                        </v-card>
                     </v-flex>
                 </v-layout>
                 <v-layout  wrap align-center>
-                    <v-flex xs4 offset-xs1>
+                    <v-flex xs4>
                         <v-select :items="[3,6,9]"
                             v-model="limit"
                             label="Limit"
@@ -82,7 +88,7 @@
           images: [],
           order:'Desc',
           page: 100,
-          limit: 6,
+          limit: 3,
           pagination_count: 0, //default until we get a result with the 'Pagination-Count' header in the response
         },
         created(){
