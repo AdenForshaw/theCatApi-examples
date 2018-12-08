@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-content>
+        <v-container>
+
+            <v-layout align-center justify-center>
+
+            <v-flex xs6>
+                <v-select :items="breeds"
+                        item-text="name"
+                        v-model="selected_breed"
+                        label="Breeds"
+                        return-object
+                        attach></v-select>
+            </v-flex>
+             
+            </v-layout>
+
+
+            <v-layout>
+                <v-flex xs12 sm6 offset-sm3>
+                  <v-card>
+                    <v-img
+                      :src="current_image.url"
+                    ></v-img>
+            
+                    <v-card-title primary-title>
+                      <div>
+                        <h3 class="headline mb-0">{{selected_breed.name}}</h3>
+                        <div>{{selected_breed.temperament}}</div>
+                        <div></div>
+                      </div>
+                    </v-card-title>
+            
+                    <v-card-actions>
+                      <v-btn :href="selected_breed.wikipedia_url" target="_blank" flat color="orange">Wikipedia</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
+ 
+ 
+  <script>
+    new Vue({ 
+        el: '#app',
+        data: {
+          images: [],
+          breeds:[],
+          selected_breed: {},
+          current_image: {}
+        },
+        created(){
+            this.getBreeds();
+        } ,
+        watch: {
+           
+            selected_breed: function()
+            {
+                console.log(this.selected_breed)
+                this.getImages();
+            }
+        },
+        methods:{
+
+            async getBreeds()
+            {
+                try{
+                    let response = await axios.get('https://api.thecatapi.com/v1/breeds/' ) 
+                    this.breeds = response.data;
+                    console.log("-- ("+this.breeds.length +") Breeds from TheCatAPI.com")
+                    
+                    // pick one to display initially
+                    this.selected_breed = this.breeds[10]
+                }catch(err){
+                    console.log(err)
+                }
+            },
+            async getImages()
+            {
+                try{
+                    axios.defaults.headers.common['x-api-key'] = "DEMO-API-KEY" // Replace this with your API Key
+                    
+                    let query_params = {
+                        breed_ids: this.selected_breed.id
+                    }
+
+                    let response = await axios.get('https://api.thecatapi.com/v1/images/search', { params: query_params } ) 
+                    
+                    this.pagination_count = response.headers['pagination-count'];
+                    this.images = response.data 
+                    this.current_image = this.images[0]
+
+                    
+
+                    console.log("-- ("+this.images.length +") Images from TheCatAPI.com")
+                    console.log( this.pagination_count ,'images available for this query.')
+                    
+                }catch(err){
+                    console.log(err)
+                }
+            }
+            
+        }
+    })
+  </script>
+</body>
+</html>
