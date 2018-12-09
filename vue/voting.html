@@ -127,7 +127,7 @@
             async getVotes()
             {
 
-              let response = await axios.get('https://api.thecatapi.com/v1/votes', { params: { order:"DESC", limit:10 } } ) // Get the last 10 votes
+              let response = await axios.get('https://api.thecatapi.com/v1/votes', { params: { order:"DESC", limit:25 } } ) // Get the last 25 votes
               
               response.data.forEach(element => {
                 //element.created_at = new Date(element.created_at).toString();// full time string including timezone
