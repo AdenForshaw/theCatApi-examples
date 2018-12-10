@@ -82,7 +82,7 @@
                 try{
                     axios.defaults.headers.common['x-api-key'] = "DEMO-API-KEY" // Replace this with your API Key
                     
-                                        let response = await axios.get('https://api.thecatapi.com/v1/images/search', { params: { limit:1, size:"full" , mime_types:"jpg,png"} } ) // Ask for 1 Image, at full resolution
+                    let response = await axios.get('https://api.thecatapi.com/v1/images/search', { params: { limit:1, size:"full" , mime_types:"jpg,png"} } ) // Ask for 1 Image, at full resolution
                     
                     this.image = response.data[0] // the response is an Array, so just use the first item as the Image
 
