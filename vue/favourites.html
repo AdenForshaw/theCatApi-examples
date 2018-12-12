@@ -77,11 +77,13 @@
                         
                                 <v-card-title primary-title>
                                   <div>
-                                    <div>ID: {{ n.id }}</div>
+                                    <div>Fav ID: {{ n.id }}</div>
+                                    <div>Image ID: {{n.image.id}}</div>
+                                    <div>sub_id: {{ n.sub_id }}</div>
                                     <div>Created: {{ new Date(n.created_at).toLocaleString() }} </div><!-- convert timezone date/time to nice string-->
                                   </div>
                                 </v-card-title>
-                        
+                    
                                 <v-card-actions>
                                   <v-btn flat dark  @click="deleteFavouriteImage(n.id)"  color="red">Delete </v-btn>
                                 </v-card-actions>
