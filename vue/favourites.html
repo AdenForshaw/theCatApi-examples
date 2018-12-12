@@ -49,6 +49,13 @@
                 </v-flex>
             </v-layout>
 
+            <v-alert v-show="error_message"
+            :value="true"
+            type="error"
+          >
+            {{error_message}}
+          </v-alert>
+
             <v-card-title>
                 <h2>Demo Account Favourites</h2>
             </v-card-title>
@@ -111,6 +118,7 @@
           images: [],
           favourites:[],
           page: 1,
+          error_message:null,
           limit: 3,
           pagination_count: 0, //default until we get a result with the 'Pagination-Count' header in the response
         },
@@ -163,7 +171,7 @@
                     let response = await axios.get('https://api.thecatapi.com/v1/favourites', { params: query_params } ) 
                     this.favourites = response.data 
                     this.pagination_count = response.headers['pagination-count'];
-
+                    this.clearError();
                 }catch(err){
                     console.log(err)
                 }
@@ -173,14 +181,15 @@
 
                 try{
                     let post_body = {
-                        image_id: image_id
+                        image_id: image_id,
+                        sub_id:"User-123"
                     }
                     let response = await axios.post('https://api.thecatapi.com/v1/favourites', post_body ) 
-                    this.favourites = response.data 
-                    
+                   this.page = 1;
                     this.getFavourites()
-                }catch(err){
-                    console.log(err)
+                }catch(error){
+                    console.log(error)
+                    this.error_message = error.response.data.message
                 }
             },
             async deleteFavouriteImage(favourite_id)//this is not the image id
@@ -190,10 +199,15 @@
                     let response = await axios.delete('https://api.thecatapi.com/v1/favourites/'+favourite_id ) 
                     this.favourites = response.data 
                     
+                   this.page = 1;
                     this.getFavourites()
                 }catch(err){
                     console.log(err)
                 }
+            },
+            async clearError()
+            {
+                this.error_message = null
             }
         }
     })
