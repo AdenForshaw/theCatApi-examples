@@ -27,7 +27,7 @@
                         >
                     </v-flex>
                     <v-layout align-center justify-center>
-                        <v-btn v-show="!image_file" color="green" dark large @click="pickFile" >
+                        <v-btn v-show="!uploading" color="green" dark large @click="pickFile" >
                             Choose New Image &nbsp; <v-icon>upload</v-icon>
                         </v-btn>
                         <v-btn v-show="image_file && !uploading" color="blue" dark large @click="uploadFile" >
