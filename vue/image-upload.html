@@ -28,7 +28,7 @@
                     </v-flex>
                     <v-layout align-center justify-center>
                         <v-btn v-show="!image_file" color="green" dark large @click="pickFile" >
-                            Choose Image &nbsp; <v-icon>upload</v-icon>
+                            Choose New Image &nbsp; <v-icon>upload</v-icon>
                         </v-btn>
                         <v-btn v-show="image_file && !uploading" color="blue" dark large @click="uploadFile" >
                             Upload &nbsp; <v-icon>upload</v-icon>
@@ -40,6 +40,13 @@
                 <v-container>
 
 
+                    <v-alert v-show="error_message"
+                    :value="true"
+                    type="error"
+                  >
+                    {{error_message}}
+                  </v-alert>
+        
                         <v-layout row wrap>
                                 <v-flex xs12 >
                                 <v-data-table
@@ -81,12 +88,15 @@
             { text: 'Name' },
             { text: 'Confidence' }
           ],
+
+          error_message:null,
         },
         created(){
            
         } ,
         methods:{
             pickFile () {
+                this.error_message = null
                 this.$refs.image.click ()
             },
             
@@ -126,6 +136,7 @@
 
                 }catch(error){
                     console.log(error)
+                    this.error_message = error.response.data.message
                     this.uploading = false;
                     this.image_file = null
                 }
