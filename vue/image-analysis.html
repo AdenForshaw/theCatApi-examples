@@ -116,8 +116,15 @@
 
                 let response = await axios.get('https://api.thecatapi.com/v1/images/'+image_id +"/analysis") // Ask for 1 Image, at full resolution
                 
+                try{
+
                 this.image_analysis = response.data[0].labels
                 console.table(response.data[0].labels)
+                }catch(err)
+                {
+                    this.image_analysis = [{Name:"No analysis available",Confidence:"100"}];
+                console.table('No analysis available.')
+                }
             }
 
         }
