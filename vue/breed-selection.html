@@ -29,7 +29,7 @@
 
 
             <v-layout>
-                <v-flex xs12 sm6 offset-sm3>
+                <v-flex xs12 sm10 offset-sm1>
                   <v-card>
                     <v-img
                       :src="current_image.url"
@@ -38,7 +38,10 @@
                     <v-card-title primary-title>
                       <div>
                         <h3 class="headline mb-0">{{selected_breed.name}}</h3>
-                        <div>{{selected_breed.temperament}}</div>
+                        <div>{{selected_breed.description}}</div>
+                        <div>---</div>
+                        <div><i>{{selected_breed.temperament}}</i></div>
+                        <div>{{selected_breed.origin}}</div>
                         <div></div>
                       </div>
                     </v-card-title>
