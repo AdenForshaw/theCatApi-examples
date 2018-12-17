@@ -46,7 +46,7 @@
                     <div class="text-xs-center">
                         <v-chip>
                                 <v-avatar>
-                                  <img :src="country_flag_url" :alt="selected_breed.country_codes">
+                                  <img :src="country_flag_url" :alt="selected_breed.country_code">
                                 </v-avatar>
                         {{selected_breed.origin}}</v-chip>
                         <v-chip v-if="selected_breed.experimental==1">Experimental</v-chip>
@@ -259,7 +259,7 @@
             {
                 console.log(this.selected_breed)
 
-                let country_code = this.selected_breed.country_codes.split(",")[0].toLowerCase();
+                let country_code = this.selected_breed.country_code.toLowerCase();
 
                 this.country_flag_url = `https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/flags/1x1/${country_code}.svg`;
                 this.getImages();
